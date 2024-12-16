@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Color {
+  RED
+  ORANGE
+  YELLOW
+  GREEN
+  BLUE
+  VIOLET
+  PURPLE
+  MAROON
+  BROWN
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String
+  color       Color
+  isCompleted Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
