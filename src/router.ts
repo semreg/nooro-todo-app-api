@@ -51,6 +51,31 @@ router.put(
   }
 )
 
+router.patch(
+  '/:id/status',
+  checkIfTaskExists,
+  validateTask,
+  async (req: Request, res: Response) => {
+    try {
+      const taskId = Number.parseInt(req.params.id, 10)
+
+      const task = await prisma.task.findUnique({ where: { id: taskId } })
+
+      const updatedTask = await prisma.task.update({
+        where: { id: taskId },
+        data: { isCompleted: !task?.isCompleted },
+      })
+
+      res.json(updatedTask)
+    } catch (error) {
+      console.error('Error updating task:', error)
+      res
+        .status(500)
+        .json({ error: 'An error occurred while updating the task.' })
+    }
+  }
+)
+
 router.delete(
   '/:id',
   checkIfTaskExists,
