@@ -54,7 +54,6 @@ router.put(
 router.patch(
   '/:id/status',
   checkIfTaskExists,
-  validateTask,
   async (req: Request, res: Response) => {
     try {
       const taskId = Number.parseInt(req.params.id, 10)
